@@ -1,0 +1,43 @@
+import streamlit as st
+import requests
+
+st.set_page_config(page_title="Credit Card Fraud Detector", page_icon="💳")
+
+st.title("💳 Credit Card Fraud Detection")
+st.write("Enter transaction feature values to predict fraud probability.")
+
+# Input fields for key features
+v1 = st.number_input("V1", value=-1.359807)
+v2 = st.number_input("V2", value=-0.072781)
+v3 = st.number_input("V3", value=2.536347)
+v4 = st.number_input("V4", value=1.378155)
+amount = st.number_input("Amount ($)", value=149.62)
+
+# Update this URL after deploying your FastAPI backend to Render
+API_URL = "http://127.0.0.1:8000/predict"  
+
+if st.button("Analyze Transaction"):
+    payload = {
+        "features": {
+            "V1": v1,
+            "V2": v2,
+            "V3": v3,
+            "V4": v4,
+            "Amount": amount
+        }
+    }
+    
+    try:
+        response = requests.post(API_URL, json=payload)
+        if response.status_code == 200:
+            result = response.json()
+            prob = result["fraud_probability"] * 100
+            
+            if result["is_fraud"]:
+                st.error(f"⚠️ High Risk: Fraud Detected! (Probability: {prob:.2f}%)")
+            else:
+                st.success(f"✅ Low Risk: Legitimate Transaction (Probability: {prob:.2f}%)")
+        else:
+            st.error("Error communicating with API.")
+    except Exception as e:
+        st.error(f"Failed to connect to backend: {e}")
