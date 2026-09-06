@@ -7,11 +7,13 @@ st.title("💳 Credit Card Fraud Detection")
 st.write("Enter transaction feature values to predict fraud probability.")
 
 # Input fields for key features
-v1 = st.number_input("V1", value=-3.0435, format="%.4f")
-v2 = st.number_input("V2", value=-2.1581, format="%.4f")
-v3 = st.number_input("V3", value=-4.0123, format="%.4f")
-v4 = st.number_input("V4", value=3.4561, format="%.4f")
-amount = st.number_input("Amount ($)", value=1.00, format="%.2f")
+# Key features including the heavy anomaly indicators
+v1 = st.number_input("V1", value=-2.3122, format="%.4f")
+v10 = st.number_input("V10 (Critical Indicator)", value=-5.5343, format="%.4f")
+v12 = st.number_input("V12 (Critical Indicator)", value=-6.1554, format="%.4f")
+v14 = st.number_input("V14 (Strongest Fraud Signal)", value=-9.2115, format="%.4f")
+v17 = st.number_input("V17 (Critical Indicator)", value=-9.5243, format="%.4f")
+amount = st.number_input("Amount ($)", value=0.00, format="%.2f")
 
 # Pointing directly to your live Render backend
 API_URL = "https://xg-boost-gdwv.onrender.com/predict"  
