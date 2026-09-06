@@ -14,7 +14,7 @@ v4 = st.number_input("V4", value=1.378155)
 amount = st.number_input("Amount ($)", value=149.62)
 
 # Update this URL after deploying your FastAPI backend to Render
-API_URL = "http://127.0.0.1:8000/predict"  
+API_URL = "https://xg-boost-gdwv.onrender.com/"  
 
 if st.button("Analyze Transaction"):
     payload = {
