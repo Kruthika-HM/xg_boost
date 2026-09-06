@@ -18,13 +18,13 @@ amount = st.number_input("Amount ($)", value=0.00, format="%.2f")
 # Pointing directly to your live Render backend
 API_URL = "https://xg-boost-gdwv.onrender.com/predict"  
 
-if st.button("Analyze Transaction"):
-    payload = {
+payload = {
         "features": {
-            "V1": v1,
-            "V2": v2,
-            "V3": v3,
-            "V4": v4,
+            "V1": v1, 
+            "V10": v10, 
+            "V12": v12, 
+            "V14": v14, 
+            "V17": v17, 
             "Amount": amount
         }
     }
