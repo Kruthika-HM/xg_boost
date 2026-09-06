@@ -27,8 +27,10 @@ if st.button("Analyze Transaction"):
         }
     }
     
-    try:
+try:
         response = requests.post(API_URL, json=payload)
+        
+        # Check if successful
         if response.status_code == 200:
             result = response.json()
             prob = result["fraud_probability"] * 100
@@ -38,6 +40,8 @@ if st.button("Analyze Transaction"):
             else:
                 st.success(f"✅ Low Risk: Legitimate Transaction (Probability: {prob:.2f}%)")
         else:
-            st.error("Error communicating with API.")
+            # THIS WILL SHOW US THE EXACT ERROR FROM RENDER
+            st.error(f"Render Error ({response.status_code}): {response.text}")
+            
     except Exception as e:
-        st.error(f"Failed to connect to backend: {e}")
+        st.error(f"Connection failed entirely: {e}")
