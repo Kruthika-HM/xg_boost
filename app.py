@@ -1,10 +1,20 @@
 import joblib
 import pandas as pd
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Dict
 
 app = FastAPI(title="Fraud Detection API", version="1.0")
+
+# Enable CORS so your Streamlit app can communicate with this backend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows requests from any frontend domain (like Streamlit Cloud)
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all HTTP methods (POST, GET, etc.)
+    allow_headers=["*"],  # Allows all headers
+)
 
 model = joblib.load("model.joblib")
 
