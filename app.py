@@ -44,11 +44,14 @@ def predict_fraud(data: TransactionInput):
         
         df = df[ALL_FEATURES]
             
-        prediction = int(model.predict(df)[0])
         probability = float(model.predict_proba(df)[0][1])
         
+        # Use a lower sensitivity threshold (e.g., 5% instead of 50%) 
+        # because rare fraud models output low raw probabilities
+        is_fraud = probability > 0.05  
+        
         return {
-            "is_fraud": prediction == 1,
+            "is_fraud": is_fraud,
             "fraud_probability": round(probability, 4)
         }
     except Exception as e:
