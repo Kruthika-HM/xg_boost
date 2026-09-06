@@ -13,8 +13,8 @@ v3 = st.number_input("V3", value=2.536347)
 v4 = st.number_input("V4", value=1.378155)
 amount = st.number_input("Amount ($)", value=149.62)
 
-# Update this URL after deploying your FastAPI backend to Render
-API_URL = "https://xg-boost-gdwv.onrender.com/"  
+# Pointing directly to your live Render backend
+API_URL = "https://xg-boost-gdwv.onrender.com/predict"  
 
 if st.button("Analyze Transaction"):
     payload = {
@@ -27,10 +27,9 @@ if st.button("Analyze Transaction"):
         }
     }
     
-try:
+    try:
         response = requests.post(API_URL, json=payload)
         
-        # Check if successful
         if response.status_code == 200:
             result = response.json()
             prob = result["fraud_probability"] * 100
@@ -40,7 +39,6 @@ try:
             else:
                 st.success(f"✅ Low Risk: Legitimate Transaction (Probability: {prob:.2f}%)")
         else:
-            # THIS WILL SHOW US THE EXACT ERROR FROM RENDER
             st.error(f"Render Error ({response.status_code}): {response.text}")
             
     except Exception as e:
